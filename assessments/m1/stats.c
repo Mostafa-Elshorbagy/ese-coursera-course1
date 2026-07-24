@@ -35,23 +35,18 @@ printf("testing111\n");
                               201,   6,  12,  60,   8,   2,   5,  67,
                                 7,  87, 250, 230,  99,   3, 100,  90};
 
-printarr(test, SIZE);
+print_array(test, SIZE);
 printf("\n***********************************************\n");
 sort_array(test, SIZE);
-printarr(test, SIZE);
+print_array(test, SIZE);
 printf("\n***********************************************\n");
-printf("%d",find_maximum(test, SIZE));
-printf("\n***********************************************\n");
-printf("%d",find_minimum(test, SIZE));
-printf("\n***********************************************\n");
-printf("%d",find_mean(test, SIZE));
-printf("\n***********************************************\n");
-printf("%d",find_median(test, SIZE));
+print_statistics(test, SIZE);
+
   /* Other Variable Declarations Go Here */
   /* Statistics and Printing Functions Go Here */
 
 }
-void printarr (unsigned char arr[], int size) {
+void print_array (unsigned char arr[], int size) {
   printf("[");
   for(int i=0; i<size; i++){
     if(i == size-1){
@@ -117,4 +112,15 @@ unsigned char find_median (unsigned char arr[], int size){
     return arr[size/2];
   }
 }
+
+ void print_statistics (unsigned char arr[], int size){
+
+printf("Max:%d",find_maximum(arr, size));
+printf("\n***********************************************\n");
+printf("Min:%d",find_minimum(arr, size));
+printf("\n***********************************************\n");
+printf("Mean:%d",find_mean(arr, size));
+printf("\n***********************************************\n");
+printf("Median:%d",find_median(arr, size));
+ }
 
