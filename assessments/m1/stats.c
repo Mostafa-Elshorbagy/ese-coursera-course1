@@ -35,9 +35,41 @@ printf("testing111\n");
                               201,   6,  12,  60,   8,   2,   5,  67,
                                 7,  87, 250, 230,  99,   3, 100,  90};
 
+printarr(test, SIZE);
+printf("\n***********************************************\n");
+sort_array(test, SIZE);
+printarr(test, SIZE);
+printf("\n***********************************************\n");
   /* Other Variable Declarations Go Here */
   /* Statistics and Printing Functions Go Here */
 
 }
+void printarr (unsigned char arr[], int size) {
+  printf("[");
+  for(int i=0; i<size; i++){
+    if(i == size-1){
+      printf("%d]",arr[i]);
+      break;
+    }
+    else{
+    printf("%d, ",arr[i]);
+    }
+  }
+}
 
 /* Add other Implementation File Code Here */
+void sort_array(unsigned char arr[], int size){
+  int temp;
+  for(int i=0;i<size;i++){
+    int champ=i;
+      for(int j=i;j<size;j++){
+        if(arr[champ]<arr[j]){
+          champ=j;
+        }
+      }
+      temp = arr[i];
+      arr[i] = arr[champ];
+      arr[champ] = temp;
+  }
+}
+

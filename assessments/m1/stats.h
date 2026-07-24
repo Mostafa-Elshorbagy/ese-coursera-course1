@@ -9,19 +9,27 @@
  *
  *****************************************************************************/
 /**
- * @file <Add File Name> 
- * @brief <Add Brief Description Here >
+ * @file stats.h
+ * @brief Declaration File for functionality and definitions of all functions used in stats.c file
  *
  * <Add Extended Description Here>
  *
- * @author <Add FirsName LastName>
- * @date <Add date >
+ * @author Mostafa Elshorbagy
+ * @date 24/7/2026
  *
  */
 #ifndef __STATS_H__
 #define __STATS_H__
 
 /* Add Your Declarations and Function Comments here */ 
+void printarr (unsigned char arr[], int size);
+void sort_array(unsigned char arr[], int size);
+void print_statistics (unsigned char arr[], int size);
+unsigned char find_minimum (unsigned char arr[], int size);
+unsigned char find_maximum (unsigned char arr[], int size);
+unsigned char find_mean (unsigned char arr[], int size);
+unsigned char find_median (unsigned char arr[], int size);
+
 
 /**
  * @brief <Add Brief Description of Function Here>
