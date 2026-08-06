@@ -22,26 +22,49 @@
 #
 #------------------------------------------------------------------------------
 include sources.mk
-
 # Platform Overrides
 PLATFORM = MSP432
-
-# Architectures Specific Flags
-LINKER_FILE = -T msp432p401r.lds
-CPU = cortex-m4
-ARCH = thumb
-MARCH = armv7e-m
-FLOAT_ABI = hard
-FPU=fpv4-sp-d16
-SPECS = nosys.specs
-
-# Compiler Flags and Defines
 ifneq ($(PLATFORM),HOST)
 	CC = arm-none-eabi-gcc
+	
+	LINKER_FILE = -T msp432p401r.lds
+	CPU = cortex-m4
+	ARCH = thumb
+	MARCH = armv7e-m
+	FLOAT_ABI = hard
+	FPU=fpv4-sp-d16
+	SPECS = nosys.specs
+	ARCHFLAGS = -mcpu=$(CPU) -m$(ARCH) --specs=$(SPECS) -march=$(MARCH) -mfloat-abi=$(FLOAT_ABI) -mfpu=$(FPU)
+
 else
 	CC = gcc
-LD = arm-none-eabi-ld
-LDFLAGS = 
-CFLAGS = -mcpu=$(CPU) -m$(ARCH) --specs=$(SPECS) -march=$(MARCH) -mfloat-abi=$(FLOAT_ABI) -mfpu=$(FPU)
-CPPFLAGS = 
+endif
 
+
+# Compiler Flags and Defines
+LD = arm-none-eabi-ld
+LDFLAGS = -Wl -Map = c1m2.map $(LINKER_FILE)
+CFLAGS = -Wall -Werror -g -O0 -std=c99
+CPPFLAGS = -D$(PLATFORM) $(INCLUDES)
+
+OBJS = $(SOURCES:.c=.o)
+
+%.o: %.c
+	$(CC) -c $< $(CFLAGS) $(CPPFLAGS) $(ARCHFLAGS) -o $@
+
+%.i : %.c
+	$(CC) -E $< $(CFLAGS) $(CPPFLAGS) $(ARCHFLAGS) -o $@
+
+%.asm : %.o
+	objdump -S $< > $@
+	
+build: $(OBJS)
+	$(CC) $(OBJS) $(CFLAGS) $(LDFLAGS) $(ARCHFLAGS) -o $@
+
+compile-all: $(OBJS)
+	
+	
+
+
+clean:
+	rm -f *.o *.i *.asm
