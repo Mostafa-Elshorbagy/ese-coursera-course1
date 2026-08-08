@@ -68,4 +68,4 @@ build: $(OBJS)
 compile-all: $(OBJS)
 
 clean:
-	rm -f *.o *.i *.asm *.out *.map c1m2 build
+	rm -f *.o *.i *.asm *.out *.map *.d c1m2 build
