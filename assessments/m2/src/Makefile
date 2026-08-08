@@ -23,11 +23,10 @@
 #------------------------------------------------------------------------------
 include sources.mk
 # Platform Overrides
-PLATFORM = MSP432
 ifneq ($(PLATFORM),HOST)
 	CC = arm-none-eabi-gcc
-	
-	LINKER_FILE = -T msp432p401r.lds
+	SIZE = arm-none-eabi-size
+	LINKER_FILE = -T ../msp432p401r.lds
 	CPU = cortex-m4
 	ARCH = thumb
 	MARCH = armv7e-m
@@ -38,33 +37,35 @@ ifneq ($(PLATFORM),HOST)
 
 else
 	CC = gcc
+	SIZE = size
 endif
 
 
 # Compiler Flags and Defines
 LD = arm-none-eabi-ld
-LDFLAGS = -Wl -Map = c1m2.map $(LINKER_FILE)
+LDFLAGS = -Wl,-Map=c1m2.map $(LINKER_FILE)
 CFLAGS = -Wall -Werror -g -O0 -std=c99
-CPPFLAGS = -D$(PLATFORM) $(INCLUDES)
+CPPFLAGS = -D$(PLATFORM) $(INCLUDES) -MD -MP
 
 OBJS = $(SOURCES:.c=.o)
-
+.PHONY: build compile-all clean
 %.o: %.c
 	$(CC) -c $< $(CFLAGS) $(CPPFLAGS) $(ARCHFLAGS) -o $@
 
 %.i : %.c
 	$(CC) -E $< $(CFLAGS) $(CPPFLAGS) $(ARCHFLAGS) -o $@
 
-%.asm : %.o
-	objdump -S $< > $@
+%.asm : %.c
+	$(CC) -S $< $(CFLAGS) $(CPPFLAGS) $(ARCHFLAGS) -o $@
 	
 build: $(OBJS)
-	$(CC) $(OBJS) $(CFLAGS) $(LDFLAGS) $(ARCHFLAGS) -o $@
+	$(CC) $(OBJS) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(ARCHFLAGS) -o c1m2.out
+	$(SIZE) c1m2.out
+
+	 
+	
 
 compile-all: $(OBJS)
-	
-	
-
 
 clean:
-	rm -f *.o *.i *.asm
+	rm -f *.o *.i *.asm *.out *.map c1m2 build
