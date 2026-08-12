@@ -53,5 +53,10 @@ int main(void) {
   }
   PRINTF("\n");
   return 0;
+uint8_t val1 =10;
+uint8_t val2 =15;
+UINT8_t *src = val1;
+UINT8_t *src = val2;
+
 }
 
