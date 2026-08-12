@@ -23,6 +23,11 @@
 #include <stdlib.h>
 #include "misc.h"
 
+// If N is not passed via the compiler (e.g., -DN=10), define a fallback value here:
+#ifndef N
+#define N 10
+#endif
+
 static int g1;
 const int g2 = 45;
 char g3 = 12;
@@ -42,11 +47,14 @@ int main()
     return -1;
   }
 
-  for( l1 = 0; l1 < g2; l3++)
+  // FIXED: Changed l3++ to l1++ to properly increment the loop counter
+  for( l1 = 0; l1 < g2; l1++)
   {
     g1 = func(l2);
   }
 
+  // Free the allocated memory to prevent memory leaks
+  free(l2);
+
   return 0;
 }
-
