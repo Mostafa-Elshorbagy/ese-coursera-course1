@@ -20,7 +20,10 @@
  * @date April 1 2017
  *
  */
+#include <stdint.h>
+#include <stddef.h>
 #include "memory.h"
+#include <stdlib.h>
 
 /***********************************************************
  Function Definitions
@@ -59,7 +62,7 @@ uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length){
   else{
     src+=length;
     dst+=length;
-    for(int i=0;i<length;i++){
+    for(int i=0;i<length+1;i++){
       *dst = *src;
       src--;
       dst--;
@@ -81,7 +84,7 @@ uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length){
   else{
     src+=length;
     dst+=length;
-    for(int i=0;i<length;i++){
+    for(int i=0;i<length+1;i++){
       *dst = *src;
       src--;
       dst--;
@@ -111,12 +114,12 @@ for(int i=0;i<length;i++){
 uint8_t * my_reverse(uint8_t * src, size_t length){
 uint8_t *Initial_destination = src;
 uint8_t *first = src;
-uint8_t *last = src+=length;
-uint8_t *temp;
+uint8_t *last = src+=length -1;
+uint8_t temp;
 while(first<=last){
-  *temp=*first
-  *first=*last
-  *last = *temp;
+  temp=*first;
+  *first=*last;
+  *last = temp;
   
   first++;
   last--;

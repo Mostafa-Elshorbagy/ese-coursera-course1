@@ -22,7 +22,7 @@
 #
 #------------------------------------------------------------------------------
 include sources.mk
-# Platform Overrides
+PLATFORM ?= HOST
 ifneq ($(PLATFORM),HOST)
 	CC = arm-none-eabi-gcc
 	SIZE = arm-none-eabi-size
@@ -44,11 +44,11 @@ endif
 # Compiler Flags and Defines
 LD = arm-none-eabi-ld
 LDFLAGS = -Wl,-Map=c1m2.map $(LINKER_FILE)
-CFLAGS = -Wall -Werror -g -O0 -std=c99
-CPPFLAGS = -D$(PLATFORM) $(INCLUDES) -MD -MP
+CFLAGS = -Wall -g -O0 -std=c99
+CPPFLAGS = -D$(PLATFORM) $(INCLUDES) 
 
 OBJS = $(SOURCES:.c=.o)
-.PHONY: build compile-all clean
+.PHONY: build compile-all clean course
 %.o: %.c
 	$(CC) -c $< $(CFLAGS) $(CPPFLAGS) $(ARCHFLAGS) -o $@
 
@@ -59,10 +59,11 @@ OBJS = $(SOURCES:.c=.o)
 	$(CC) -S $< $(CFLAGS) $(CPPFLAGS) $(ARCHFLAGS) -o $@
 	
 build: $(OBJS)
-	$(CC) $(OBJS) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(ARCHFLAGS) -o c1m2.out
+	$(CC) $(OBJS) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(ARCHFLAGS) -DCOURSE1 -DVERBOSE -o c1m2.out
 	$(SIZE) c1m2.out
 
-	 
+course: course1.c
+	gcc course1.c  $(CPPFLAGS) -o output
 	
 
 compile-all: $(OBJS)

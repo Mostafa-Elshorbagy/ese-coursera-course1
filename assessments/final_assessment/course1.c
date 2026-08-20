@@ -187,13 +187,21 @@ int8_t test_memmove3() {
   my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH);
   print_array(set, MEM_SET_SIZE_B);
 
+  bool flag = true;
   for (i = 0; i < TEST_MEMMOVE_LENGTH; i++)
   {
     if (set[i] != (i + 8))
     {
+      flag == false;
+      PRINTF("\nerror at index %d\n",i);
       ret = TEST_ERROR;
     }
+ 
+      PRINTF("\nno errors\n");
+    
+    }
   }
+  
 
 
   free_words( (uint32_t*)set );

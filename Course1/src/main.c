@@ -20,17 +20,18 @@
  * @date April 1 2017
  *
  */
+ #include <stdint.h>
+ #include <stddef.h>
 #include "platform.h"
 #include "memory.h"
+#include "course1.h"
 
 #define MAX_LENGTH (10)
 char buffer[MAX_LENGTH];
-
+void course1();
 /* A pretty boring main file */
 int main(void) {
-  #ifdef COURSE1
   course1();
-  #endif
   unsigned int i;
   char value;
 
@@ -53,10 +54,7 @@ int main(void) {
   }
   PRINTF("\n");
   return 0;
-uint8_t val1 =10;
-uint8_t val2 =15;
-UINT8_t *src = val1;
-UINT8_t *src = val2;
+
 
 }
 

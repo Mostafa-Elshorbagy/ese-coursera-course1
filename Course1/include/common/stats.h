@@ -18,9 +18,11 @@
  * @date 24/7/2026
  *
  */
+
 #ifndef __STATS_H__
 #define __STATS_H__
-
+#include <stdint.h>
+#include <stddef.h>
 /* Add Your Declarations and Function Comments here */ 
 
 

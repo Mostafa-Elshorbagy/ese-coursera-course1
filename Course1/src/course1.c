@@ -18,18 +18,19 @@
  */
 
 #include <stdint.h>
-#include "course1.h"
+#include <stddef.h>
 #include "platform.h"
 #include "memory.h"
 #include "data.h"
 #include "stats.h"
-
+#include "course1.h"
+#define BASE_16 16
+#define BASE_10 10
 int8_t test_data1() {
   uint8_t * ptr;
   int32_t num = -4096;
   uint32_t digits;
   int32_t value;
-
   PRINTF("\ntest_data1();\n");
   ptr = (uint8_t*) reserve_words( DATA_SET_SIZE_W );
 
@@ -59,7 +60,7 @@ int8_t test_data2() {
   uint32_t digits;
   int32_t value;
 
-  PRINTF("test_data2():\n");
+  PRINTF("\ntest_data2():\n");
   ptr = (uint8_t*) reserve_words( DATA_SET_SIZE_W );
 
   if (! ptr )
@@ -129,7 +130,7 @@ int8_t test_memmove2() {
   uint8_t * ptra;
   uint8_t * ptrb;
 
-  PRINTF("test_memmove2() -OVERLAP END OF SRC BEGINNING OF DST\n");
+  PRINTF("\ntest_memmove2() -OVERLAP END OF SRC BEGINNING OF DST\n");
   set = (uint8_t*) reserve_words(MEM_SET_SIZE_W);
 
   if (! set )
@@ -167,7 +168,7 @@ int8_t test_memmove3() {
   uint8_t * ptra;
   uint8_t * ptrb;
 
-  PRINTF("test_memove3() - OVERLAP END OF DEST BEGINNING OF SRC\n");
+  PRINTF("\ntest_memove3() - OVERLAP END OF DEST BEGINNING OF SRC\n");
   set = (uint8_t*)reserve_words( MEM_SET_SIZE_W);
 
   if (! set ) 
@@ -187,11 +188,17 @@ int8_t test_memmove3() {
   my_memmove(ptra, ptrb, TEST_MEMMOVE_LENGTH);
   print_array(set, MEM_SET_SIZE_B);
 
+  _Bool flag = 1;
   for (i = 0; i < TEST_MEMMOVE_LENGTH; i++)
   {
     if (set[i] != (i + 8))
     {
+      flag = 0;
+      PRINTF("\nerror at index %d\n",i);
       ret = TEST_ERROR;
+    }
+    else if(i==TEST_MEMMOVE_LENGTH-1 && flag == 1){
+       PRINTF("\n\nno errors at any indices\n\n");
     }
   }
 
@@ -208,7 +215,7 @@ int8_t test_memcopy() {
   uint8_t * ptra;
   uint8_t * ptrb;
 
-  PRINTF("test_memcopy()\n");
+  PRINTF("\ntest_memcopy()\n");
   set = (uint8_t*) reserve_words(MEM_SET_SIZE_W);
 
   if (! set ) 
@@ -247,7 +254,7 @@ int8_t test_memset()
   uint8_t * ptra;
   uint8_t * ptrb;
 
-  PRINTF("test_memset()\n");
+  PRINTF("\ntest_memset()\n");
   set = (uint8_t*)reserve_words(MEM_SET_SIZE_W);
   if (! set )
   {
@@ -296,19 +303,18 @@ int8_t test_reverse()
                                  0x20, 0x24, 0x7C, 0x20, 0x24, 0x69, 0x68, 0x54
                                };
 
-  PRINTF("test_reverse()\n");
+  PRINTF("\ntest_reverse()\n");
   copy = (uint8_t*)reserve_words(MEM_SET_SIZE_W);
   if (! copy )
   {
     return TEST_ERROR;
   }
-  
   my_memcopy(set, copy, MEM_SET_SIZE_B);
+
 
   print_array(set, MEM_SET_SIZE_B);
   my_reverse(set, MEM_SET_SIZE_B);
   print_array(set, MEM_SET_SIZE_B);
-
   for (i = 0; i < MEM_SET_SIZE_B; i++)
   {
     if (set[i] != copy[MEM_SET_SIZE_B - i - 1])
@@ -327,17 +333,18 @@ void course1(void)
   int8_t failed = 0;
   int8_t results[TESTCOUNT];
 
-  results[0] = test_data1();
-  results[1] = test_data2();
-  results[2] = test_memmove1();
-  results[3] = test_memmove2();
-  results[4] = test_memmove3();
-  results[5] = test_memcopy();
-  results[6] = test_memset();
-  results[7] = test_reverse();
-
+  results[0] = test_data1(); 
+  results[1] = test_data2(); 
+  results[2] = test_memmove1(); //
+  results[3] = test_memmove2(); //
+  results[4] = test_memmove3(); 
+  results[5] = test_memcopy(); 
+  results[6] = test_memset(); 
+  results[7] = test_reverse(); 
+  printf("\n");
   for ( i = 0; i < TESTCOUNT; i++) 
   {
+    printf("%d test is %d\n", i, results[i]);
     failed += results[i];
   }
 

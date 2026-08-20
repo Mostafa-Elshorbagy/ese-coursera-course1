@@ -20,32 +20,34 @@
  */
 
 
-
+#include <stdint.h>
+#include <stddef.h>
 #include <stdio.h>
 #include "stats.h"
+#include "platform.h"
 
 /* Size of the Data Set */
 #define SIZE (40)
 
-void main() {
-PRINTF("testing111\n");
-  unsigned char test[SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
-                              114, 88,   45,  76, 123,  87,  25,  23,
-                              200, 122, 150, 90,   92,  87, 177, 244,
-                              201,   6,  12,  60,   8,   2,   5,  67,
-                                7,  87, 250, 230,  99,   3, 100,  90};
+// void main() {
+// PRINTF("testing111\n");
+//   unsigned char test[SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
+//                               114, 88,   45,  76, 123,  87,  25,  23,
+//                               200, 122, 150, 90,   92,  87, 177, 244,
+//                               201,   6,  12,  60,   8,   2,   5,  67,
+//                                 7,  87, 250, 230,  99,   3, 100,  90};
 
-print_array(test, SIZE);
-PRINTF("\n***********************************************\n");
-sort_array(test, SIZE);
-print_array(test, SIZE);
-PRINTF("\n***********************************************\n");
-print_statistics(test, SIZE);
+// print_array(test, SIZE);
+// PRINTF("\n***********************************************\n");
+// sort_array(test, SIZE);
+// print_array(test, SIZE);
+// PRINTF("\n***********************************************\n");
+// print_statistics(test, SIZE);
 
-  /* Other Variable Declarations Go Here */
-  /* Statistics and Printing Functions Go Here */
+//   /* Other Variable Declarations Go Here */
+//   /* Statistics and Printing Functions Go Here */
 
-}
+// }
 //*Comment Out These at the end{
 #define VERBOSE
 
